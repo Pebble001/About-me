@@ -1,6 +1,8 @@
+/* recency, frequency and monetary value */
+
 SELECT * from sales.SalesOrderHeader
 
---library--
+
 
 /*SELECT count(CustomerID) from Sales.SalesOrderHeader*/
 
@@ -23,7 +25,6 @@ SELECT * from #test2
  /*SELECT count(SalesOrderID) as no_of_orders, SalesOrderID into #test3 from Sales.SalesOrderDetail
 GROUP BY SalesOrderID*/
 
-
 SELECT MAX(COUNT(SalesOrderID)) FROM Sales.SalesOrderDetail
 
 select distinct SalesOrderID from Sales.SalesOrderDetail
@@ -36,8 +37,6 @@ select distinct SalesOrderID from Sales.SalesOrderDetail
 --select * from #test4
 
 --select max(sum_order) from #test4--
-
--- segmentation
 
 
 /*select a.CustomerID, 
@@ -72,63 +71,5 @@ on a.SalesOrderID = b.SalesOrderID
 GROUP BY a.CustomerID
 ORDER BY Monetaryvalue DESC*/
 
-select *
-FROM #RFM
+SELECT * FROM #RFM
 ORDER BY MONETARYVALUE
-
-/*
-recency, frequency and monetary value
-*/
-
-/*SELECT * ,
-CASE WHEN Monetary_Rating='highballer_customer' and recency_rating BETWEEN 'fairrecency_customer' and 'highrecency_customer' THEN 'high_value'
-     WHEN Frequency_rating='fairfrequency_customer' or frequency_rating='goodfrequency_customer' or frequency_rating='highfrequency_customer' then 'loyal'
-     WHEN Recency_rating='lowrecency_customer' then 'dormant'
-     WHEN Monetary_rating='lowballer_customer' then 'lowspender'
-     WHEN Frequency_rating='lowfrequency_customer' then 'atrisk'
-     WHEN recency_rating='highfrequency_customer' or recency_rating='goodfrequency_customer' and monetary_rating='fairballer_customer' or monetary_rating='goodballer_customer' and Frequency_rating='lowfrequency_customer' THEN 'occasional_ballers'
-     ELSE 'ungrouped'
-     END AS Customer_segment
-       into #customer_segs
-     FROM #RFM
-ORDER BY MONETARYVALUE*/
-
-SELECT *
-from #customer_segs
-
-
-SELECT * from Sales.SalesOrderDetail
-SELECT * FROM Sales.SalesOrderHeader
-
-/*SELECT A.name as product_name1,a.ProductID, e.name as product_name2,count (distinct b.SalesOrderID) as frequency 
-into #Freqbought_together
-from Production.Product A
-join Sales.SalesOrderDetail b
-on a.ProductID = b.ProductID
-JOIN Sales.SalesOrderHeader c
-ON b.SalesOrderID = c.SalesOrderID
-join Sales.SalesOrderDetail d
-on c.SalesOrderID = d.SalesOrderID
-JOIN Production.Product e
-ON d.ProductID = e.ProductID
-group by a.Name, e.Name, a.ProductID
-
-/*SELECT distinct product_name1, product_name2, frequency from #Freqbought_together
-where product_name1 <> product_name2
-order by frequency desc*/
-
-select * ,
-
-case when frequency >=200 then 'high_freqbought_together'
-     WHEN frequency >=100 then  'moderatelybought_together'
-     when frequency >=50 then 'lessboughttogether'
-     when frequency <50   then 'leastboughtogehter'
-end as freqboughttogether_segments
-
-into #purchasedtogehter_segments
-from #Freqbought_together
-
-select distinct product_name1, product_name2, frequency, freqboughttogether_segments from #purchasedtogehter_segments
-
-where product_name1 <> product_name2
-order by frequency desc
