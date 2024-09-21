@@ -11,7 +11,7 @@ group by CustomerID-- recency
 
 SELECT * from #test2
 
-/*select max (r) from #test2*/
+/*select ini  max (r) from #test2*/
 
  /* frequency*/
 
