@@ -1,7 +1,5 @@
 SELECT * from sales.SalesOrderHeader
 
---library--
-
 /*SELECT count(CustomerID) from Sales.SalesOrderHeader*/
 
 /*select MAX(OrderDate) from Sales.SalesOrderHeader*/
@@ -11,7 +9,7 @@ group by CustomerID-- recency
 
 SELECT * from #test2
 
-/*select ini  max (r) from #test2*/
+/*select from #test2*/
 
  /* frequency*/
 
@@ -37,7 +35,7 @@ select distinct SalesOrderID from Sales.SalesOrderDetail
 
 --select max(sum_order) from #test4--
 
--- segmentation
+
 
 
 /*select a.CustomerID, 
@@ -77,8 +75,7 @@ FROM #RFM
 ORDER BY MONETARYVALUE
 
 /*
-recency, frequency and monetary value
-*/
+customer segmentation*/
 
 /*SELECT * ,
 CASE WHEN Monetary_Rating='highballer_customer' and recency_rating BETWEEN 'fairrecency_customer' and 'highrecency_customer' THEN 'high_value'
@@ -97,8 +94,10 @@ SELECT *
 from #customer_segs
 
 
-SELECT * from Sales.SalesOrderDetail
-SELECT * FROM Sales.SalesOrderHeader
+--SELECT * from Sales.SalesOrderDetail--
+--SELECT * FROM Sales.SalesOrderHeader--
+
+--products frequently bought together--
 
 /*SELECT A.name as product_name1,a.ProductID, e.name as product_name2,count (distinct b.SalesOrderID) as frequency 
 into #Freqbought_together
